@@ -1,8 +1,8 @@
 package com.mateus.urlshortener.domain;
 
+import com.mateus.urlshortener.util.UriGenerator;
 import jakarta.persistence.*;
 
-import java.util.Random;
 
 @Entity
 @Table(name = "tb_url")
@@ -10,15 +10,17 @@ public class Url {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
     String url;
+    private static final UriGenerator uriGenerator = new UriGenerator();
 
     @Column(unique = true)
-    String shortUrl;
+    String shortUri;
 
     public Url(Integer id, String url) {
         this.id = id;
         this.url = url;
-        generateShortUrl();
+        setShortUri(uriGenerator.generateUri());
     }
 
     public Url(){
@@ -40,21 +42,12 @@ public class Url {
         this.url = url;
     }
 
-    public String getShortUrl() {
-        return shortUrl;
+    public String getShortUri() {
+        return shortUri;
     }
 
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
+    public void setShortUri(String shortUrl) {
+        this.shortUri = shortUrl;
     }
 
-    private void generateShortUrl() {
-        StringBuilder newUrl = new StringBuilder();
-        Random generator = new Random();
-        for (int i = 1; i <= 10; i++) {
-            char newChar = (char) generator.nextInt(97, 123);
-            newUrl.append(newChar);
-        }
-        setShortUrl(newUrl.toString());
-    }
 }
