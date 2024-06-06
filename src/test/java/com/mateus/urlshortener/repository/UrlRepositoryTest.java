@@ -4,10 +4,13 @@ import com.mateus.urlshortener.domain.Url;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,8 +34,10 @@ class UrlRepositoryTest {
     }
 
     @Test @Transactional
+    @DisplayName("Should return a Url with the passed URI as parameter")
     void findByShortUriSuccess() {
-        Url urlFounded = urlRepository.findByshortUri(shortUri);
+        Optional<Url> urlOptional = urlRepository.findByShortUri(shortUri);
+        Url urlFounded = urlOptional.get();
         assertEquals(url, urlFounded);
     }
 }

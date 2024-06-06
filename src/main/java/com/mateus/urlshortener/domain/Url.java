@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Url {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
 
     String url;
     private static final UriGenerator uriGenerator = new UriGenerator();
@@ -19,7 +19,7 @@ public class Url {
     @Column(unique = true)
     String shortUri;
 
-    public Url(Integer id, String url) {
+    public Url(Long id, String url) {
         this.id = id;
         this.url = url;
         setShortUri(uriGenerator.generateUri());
@@ -28,11 +28,11 @@ public class Url {
     public Url(){
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
