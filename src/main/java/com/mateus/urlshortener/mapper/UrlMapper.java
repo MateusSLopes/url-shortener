@@ -1,4 +1,4 @@
-package com.mateus.urlshortener;
+package com.mateus.urlshortener.mapper;
 
 import com.mateus.urlshortener.domain.Url;
 import com.mateus.urlshortener.dto.UrlDto;

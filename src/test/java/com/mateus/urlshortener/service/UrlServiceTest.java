@@ -1,6 +1,6 @@
 package com.mateus.urlshortener.service;
 
-import com.mateus.urlshortener.UrlMapper;
+import com.mateus.urlshortener.mapper.UrlMapper;
 import com.mateus.urlshortener.domain.Url;
 import com.mateus.urlshortener.dto.UrlDto;
 import com.mateus.urlshortener.exception.UrlNotFoundException;
