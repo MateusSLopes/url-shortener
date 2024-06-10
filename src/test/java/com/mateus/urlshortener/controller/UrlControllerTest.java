@@ -67,7 +67,7 @@ class UrlControllerTest {
         when(urlService.save(urlDto))
                 .thenReturn(url);
 
-        mockMvc.perform(post("")
+        mockMvc.perform(post("/url")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(urlDto)))
                 .andExpect(status().isCreated())

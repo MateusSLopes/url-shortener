@@ -24,7 +24,7 @@ public class UrlController {
                 .build();
     }
 
-    @PostMapping
+    @PostMapping("/url")
     public ResponseEntity<UrlModel> saveUrl(@RequestBody UrlDto urlDto) {
         UrlModel urlModel = urlService.save(urlDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(urlModel);
