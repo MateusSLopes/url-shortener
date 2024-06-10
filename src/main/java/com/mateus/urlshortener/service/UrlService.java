@@ -1,13 +1,14 @@
 package com.mateus.urlshortener.service;
 
+import com.mateus.urlshortener.domain.UrlModel;
 import com.mateus.urlshortener.mapper.UrlMapper;
-import com.mateus.urlshortener.domain.Url;
 import com.mateus.urlshortener.dto.UrlDto;
 import com.mateus.urlshortener.exception.UrlNotFoundException;
 import com.mateus.urlshortener.repository.UrlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URL;
 import java.util.Optional;
 
 @Service
@@ -18,24 +19,24 @@ public class UrlService {
     @Autowired
     UrlMapper urlMapper;
 
-    public UrlDto findByShortUri(String shortUri) {
-        Optional<Url> optionalUrl = urlRepository.findByShortUri(shortUri);
-        requireOptionalIsNotEmpty(optionalUrl);
-        return new UrlDto(optionalUrl.get().getUrl());
+    public URL findByShortUri(String shortUri) {
+        Optional<UrlModel> optionalUrlModel = urlRepository.findByShortUri(shortUri);
+        requireOptionalIsNotEmpty(optionalUrlModel);
+        return optionalUrlModel.get().getUrl();
     }
 
     public void deleteById(Long id) {
-        Optional<Url> optionalUrl = urlRepository.findById(id);
-        requireOptionalIsNotEmpty(optionalUrl);
-        urlRepository.delete(optionalUrl.get());
+        Optional<UrlModel> optionalUrlModel = urlRepository.findById(id);
+        requireOptionalIsNotEmpty(optionalUrlModel);
+        urlRepository.delete(optionalUrlModel.get());
     }
 
-    public Url save(UrlDto urlDto) {
-        Url url = urlMapper.toUrl(urlDto);
+    public UrlModel save(UrlDto urlDto) {
+        UrlModel url = urlMapper.toUrlModel(urlDto);
         return urlRepository.save(url);
     }
 
-    private void requireOptionalIsNotEmpty(Optional<Url> optional) {
+    private void requireOptionalIsNotEmpty(Optional<UrlModel> optional) {
         if (optional.isEmpty())
             throw new UrlNotFoundException();
     }

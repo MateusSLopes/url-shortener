@@ -3,29 +3,30 @@ package com.mateus.urlshortener.domain;
 import com.mateus.urlshortener.util.UriGenerator;
 import jakarta.persistence.*;
 
+import java.net.URL;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "tb_url")
-public class Url {
+public class UrlModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String url;
+    URL url;
     private static final UriGenerator uriGenerator = new UriGenerator();
 
     @Column(unique = true)
     String shortUri;
 
-    public Url(Long id, String url) {
+    public UrlModel(Long id, URL url) {
         this.id = id;
         this.url = url;
         setShortUri(uriGenerator.generateUri());
     }
 
-    public Url(){
+    public UrlModel(){
     }
 
     public Long getId() {
@@ -36,12 +37,13 @@ public class Url {
         this.id = id;
     }
 
-    public String getUrl() {
+    public URL getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(URL url) {
         this.url = url;
+        setShortUri(uriGenerator.generateUri());
     }
 
     public String getShortUri() {
@@ -52,13 +54,12 @@ public class Url {
         this.shortUri = shortUrl;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Url url1 = (Url) o;
-        return Objects.equals(id, url1.id) && Objects.equals(url, url1.url) && Objects.equals(shortUri, url1.shortUri);
+        UrlModel urlModel = (UrlModel) o;
+        return Objects.equals(id, urlModel.id) && Objects.equals(url, urlModel.url) && Objects.equals(shortUri, urlModel.shortUri);
     }
 
     @Override

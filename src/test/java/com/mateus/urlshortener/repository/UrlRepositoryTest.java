@@ -1,6 +1,6 @@
 package com.mateus.urlshortener.repository;
 
-import com.mateus.urlshortener.domain.Url;
+import com.mateus.urlshortener.domain.UrlModel;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -23,12 +25,12 @@ class UrlRepositoryTest {
     @Autowired
     EntityManager entityManager;
 
-    Url url;
+    UrlModel url;
     String shortUri;
 
     @BeforeEach @Transactional
-    void setup() {
-        url = new Url(null, "https://www.google.com");
+    void setup() throws MalformedURLException {
+        url = new UrlModel(null, new URL("https://www.google.com"));
         shortUri = url.getShortUri();
         entityManager.persist(url);
     }
@@ -36,8 +38,8 @@ class UrlRepositoryTest {
     @Test @Transactional
     @DisplayName("Should return a Url with the passed URI as parameter")
     void findByShortUriSuccess() {
-        Optional<Url> urlOptional = urlRepository.findByShortUri(shortUri);
-        Url urlFounded = urlOptional.get();
+        Optional<UrlModel> urlOptional = urlRepository.findByShortUri(shortUri);
+        UrlModel urlFounded = urlOptional.get();
         assertEquals(url, urlFounded);
     }
 }
