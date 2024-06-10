@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
+import java.net.URI;
 import java.net.URL;
 
 @RestController
@@ -16,10 +16,12 @@ public class UrlController {
     @Autowired
     UrlService urlService;
 
-    @GetMapping("/{shortUri}")
-    public RedirectView redirectByShortUri(@PathVariable String shortUri) {
+    @GetMapping("/find/{shortUri}")
+    public ResponseEntity<Void> redirectByShortUri(@PathVariable String shortUri) {
         URL url = urlService.findByShortUri(shortUri);
-        return new RedirectView(url.toString());
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .location(URI.create(url.toString()))
+                .build();
     }
 
     @PostMapping

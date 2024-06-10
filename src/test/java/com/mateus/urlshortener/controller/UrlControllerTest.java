@@ -55,7 +55,7 @@ class UrlControllerTest {
     void redirectByShortUriWithSuccess() throws Exception {
         when(urlService.findByShortUri(url.getShortUri()))
                 .thenReturn(url.getUrl());
-        mockMvc.perform(get("/" + url.getShortUri()))
+        mockMvc.perform(get("/find/{shortUri}", url.getShortUri()))
                 .andExpect(redirectedUrl(url.getUrl().toString()))
                 .andExpect(status().is3xxRedirection());
     }
