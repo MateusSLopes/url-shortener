@@ -3,50 +3,40 @@ package com.mateus.urlshortener.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mateus.urlshortener.domain.UrlModel;
 import com.mateus.urlshortener.dto.UrlDto;
-import com.mateus.urlshortener.repository.UrlRepository;
 import com.mateus.urlshortener.service.UrlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class UrlControllerTest {
-    @InjectMocks
-    UrlController urlController;
-
-    @Mock
+    @MockBean
     UrlService urlService;
 
     @Autowired
     ObjectMapper mapper;
 
-    @Mock
+    @Autowired
     MockMvc mockMvc;
+
     UrlModel url;
 
-    @Mock
-    UrlRepository urlRepository;
     @BeforeEach
     void setup() throws MalformedURLException {
-        mockMvc = MockMvcBuilders.standaloneSetup(urlController)
-                .alwaysDo(print()).build();
         url = new UrlModel(1L, new URL("https://www.google.com/"));
     }
 
